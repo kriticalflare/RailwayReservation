@@ -15,209 +15,373 @@
  */
 package com.railway.reservation;
 
+import com.railway.reservation.constants.Constants;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+
 /**
  *
  * @author kriticalflare
  */
-import com.railway.reservation.constants.Constants;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.sql.*;
-public class Registration extends JFrame implements ActionListener 
-  { 
-    JLabel l1, l2, l3, l4, l5, l7, l8;
-    JTextField tf1, tf2, tf3,tf5, tf7;
-    JButton btn1, btn2,bt3,bt4,bt5;
-    JPasswordField p1, p2;
-    Integer s1,s3; 
-    String s2,s5,pass;
-            Connection conn = null;
-            Statement stmt = null;
-            ResultSet rs =null;
-    Registration()
-     {
-        setVisible(true);
-        setSize(700, 700);
-        setLayout(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle("Registration Form");
-         l1 = new JLabel("SignUp Form:");
-        l1.setForeground(Color.blue);
-        l1.setFont(new Font("Serif", Font.BOLD, 20));
-        l1.setHorizontalAlignment(JLabel.CENTER);
-        JPanel panel = new JPanel(); 
-        l2 = new JLabel("Id:");
-        l3 = new JLabel("Name:");
-        l4 = new JLabel("Age");
-        l5 = new JLabel("Address");
-        l7 = new JLabel("Enter Id to be searched:");
-        l8 = new JLabel("Enter Password:");
-        tf1 = new JTextField();
-        tf2 = new JTextField();
-        tf3 = new JTextField();
-        tf5 = new JTextField();
-        tf7 = new JTextField();
-        p1 = new JPasswordField();
-        btn1 = new JButton("Create");
-        btn2 = new JButton("Reset");
-        bt3 = new JButton("Search");
-        bt4 = new JButton("Login");
-        bt5 = new JButton("Save");
-        btn1.addActionListener(this);
-        btn2.addActionListener(this);
-        bt3.addActionListener(this);
-        bt4.addActionListener(this);
-        bt5.addActionListener(this);
-         l1.setBounds(100, 30, 400, 30);
-         l2.setBounds(80, 70, 200, 30);
-         l3.setBounds(80, 110, 200, 30);
-         l4.setBounds(80, 150, 200, 30);
-         l5.setBounds(80, 190, 200, 30);
-         l7.setBounds(80, 530, 200, 30);
-         l8.setBounds(80, 280, 200, 30);
-         tf1.setBounds(300, 70, 200, 30);
-         tf2.setBounds(300, 110, 200, 30);
-         tf3.setBounds(300, 150, 200, 30);
-         tf5.setBounds(300, 190, 200, 30);
-         p1.setBounds(300, 280, 200, 30);
-         btn1.setBounds(50, 350, 100, 30);
-         btn2.setBounds(170, 350, 100, 30);
-         bt3.setBounds(550, 530, 100, 30);
-         bt5.setBounds(300, 350, 100, 30);
-         bt4.setBounds(450, 350, 100, 30);
-         tf7.setBounds(300, 530, 200, 30);
-         add(l1);
-         add(l2);
-         add(tf1);
-         add(l3);
-         add(tf2);
-         add(l4);
-         add(tf3);
-         add(l5);
-         add(tf5);
-         add(l7);
-         add(l8);
-         add(tf7);
-         add(btn1);
-         add(btn2);
-         add(bt3);
-         add(bt4);
-         add(bt5);
-         add(p1);
+public class Registration extends javax.swing.JFrame {
+
+    Integer s1, s3;
+    String s2, s5, pass;
+    Connection conn = null;
+    Statement stmt = null;
+    ResultSet rs = null;
+
+    /**
+     * Creates new form Registration
+     */
+    public Registration() {
+        initComponents();
+
     }
-     public void actionPerformed(ActionEvent e) 
-     {
-        if (e.getSource() == btn1)
-         {
-            insert();
-          }
-        else if(e.getSource()==bt3)
-        {
-            search(Integer.parseInt(tf7.getText()));
-        }
-        else if(e.getSource()==bt4)
-        {
-            nextframe();
-        }
-        else if(e.getSource()==bt5)
-        {
-            update(Integer.parseInt(tf7.getText()));
-        }
-          else
-           {           
-             clear();
-        }
-     }
-    public void insert()
-    {
-        int x = 0;
-             s1 = Integer.parseInt(tf1.getText());
-             s2 = tf2.getText();
-             s3 = Integer.parseInt(tf3.getText());
-             s5 = tf5.getText();
-             char[] pass = p1.getPassword();
-             String s8 = new String(pass);
-          try
-               {
-                    Connection con = DriverManager.getConnection(Constants.url,Constants.user,Constants.password);
-                    PreparedStatement ps = con.prepareStatement("insert into userLogin values (?,?,?,?,?)");
-                    ps.setInt(1, s1);
-                    ps.setString(2, s2);
-                    ps.setInt(3, s3);
-                    ps.setString(4, s5);
-                    ps.setString(5, s8);               
-                    ps.executeUpdate();
-                    JOptionPane.showMessageDialog(btn1, "Data Saved Successfully");
-                    clear();
-                }
-                catch (Exception ex) 
-                {
-                    System.out.println(ex);
-                }
-    }
-    public void search(int id)
-    {
-        try {          
-            conn = DriverManager.getConnection(Constants.url,Constants.user,Constants.password);
-            stmt = conn.createStatement();
-            rs = stmt.executeQuery( "select * from userLogin where ID ="+id);
-           while ( rs.next() ) {   
-            int i= rs.getInt("id") ;
-            tf1.setText(""+i);
-            tf2.setText(rs.getString("name"));
-            tf3.setText(""+rs.getInt("age"));
-            tf5.setText(rs.getString("address"));
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        signUpHeader = new javax.swing.JLabel();
+        labelId = new javax.swing.JLabel();
+        labelName = new javax.swing.JLabel();
+        labelAge = new javax.swing.JLabel();
+        labelAddress = new javax.swing.JLabel();
+        labelPassword = new javax.swing.JLabel();
+        buttonSignUp = new javax.swing.JButton();
+        buttonLogIn = new javax.swing.JButton();
+        searchHeader = new javax.swing.JLabel();
+        labelSearch = new javax.swing.JLabel();
+        buttonSearch = new javax.swing.JButton();
+        textID = new javax.swing.JTextField();
+        textName = new javax.swing.JTextField();
+        textAge = new javax.swing.JTextField();
+        textAddress = new javax.swing.JTextField();
+        textPassword = new javax.swing.JPasswordField();
+        textSearch = new javax.swing.JTextField();
+        buttonUpdate = new javax.swing.JButton();
+        buttonClear = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        signUpHeader.setText("Login/Signup");
+
+        labelId.setText("ID");
+
+        labelName.setText("Name");
+
+        labelAge.setText("Age");
+
+        labelAddress.setText("Address");
+
+        labelPassword.setText("Password");
+
+        buttonSignUp.setText("Sign up");
+        buttonSignUp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonSignUpActionPerformed(evt);
             }
-           stmt.close();
-         conn.close();
+        });
+
+        buttonLogIn.setText("Login");
+        buttonLogIn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonLogInActionPerformed(evt);
+            }
+        });
+
+        searchHeader.setText("Or Search for your account");
+
+        labelSearch.setText("Enter ID to be searched");
+
+        buttonSearch.setText("Search");
+        buttonSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonSearchActionPerformed(evt);
+            }
+        });
+
+        buttonUpdate.setText("Update");
+        buttonUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonUpdateActionPerformed(evt);
+            }
+        });
+
+        buttonClear.setText("Clear");
+        buttonClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonClearActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(156, 156, 156)
+                        .addComponent(signUpHeader))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(labelSearch)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                                .addComponent(textSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(buttonSearch))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(labelId)
+                                .addComponent(labelAge)
+                                .addComponent(labelAddress)
+                                .addComponent(labelPassword)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(buttonSignUp)
+                                    .addGap(18, 18, 18)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(searchHeader)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(buttonLogIn)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(buttonUpdate)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(buttonClear)))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(labelName)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(textID)
+                                            .addComponent(textName, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(textAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(textAge, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(textPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(97, 97, 97)))))
+                .addGap(29, 29, 29))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(signUpHeader)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelId)
+                    .addComponent(textID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelName)
+                    .addComponent(textName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelAge)
+                    .addComponent(textAge, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelAddress)
+                    .addComponent(textAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelPassword)
+                    .addComponent(textPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(buttonSignUp)
+                    .addComponent(buttonLogIn)
+                    .addComponent(buttonUpdate)
+                    .addComponent(buttonClear))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(searchHeader)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelSearch)
+                    .addComponent(buttonSearch)
+                    .addComponent(textSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void buttonSignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSignUpActionPerformed
+        insert();
+    }//GEN-LAST:event_buttonSignUpActionPerformed
+
+    private void buttonLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonLogInActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buttonLogInActionPerformed
+
+    private void buttonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonUpdateActionPerformed
+        update();
+    }//GEN-LAST:event_buttonUpdateActionPerformed
+
+    private void buttonSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSearchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buttonSearchActionPerformed
+
+    private void buttonClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonClearActionPerformed
+        clear();
+    }//GEN-LAST:event_buttonClearActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Registration.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Registration.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Registration.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Registration.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Registration().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton buttonClear;
+    private javax.swing.JButton buttonLogIn;
+    private javax.swing.JButton buttonSearch;
+    private javax.swing.JButton buttonSignUp;
+    private javax.swing.JButton buttonUpdate;
+    private javax.swing.JLabel labelAddress;
+    private javax.swing.JLabel labelAge;
+    private javax.swing.JLabel labelId;
+    private javax.swing.JLabel labelName;
+    private javax.swing.JLabel labelPassword;
+    private javax.swing.JLabel labelSearch;
+    private javax.swing.JLabel searchHeader;
+    private javax.swing.JLabel signUpHeader;
+    private javax.swing.JTextField textAddress;
+    private javax.swing.JTextField textAge;
+    private javax.swing.JTextField textID;
+    private javax.swing.JTextField textName;
+    private javax.swing.JPasswordField textPassword;
+    private javax.swing.JTextField textSearch;
+    // End of variables declaration//GEN-END:variables
+
+
+    public void insert() {
+        int x = 0;
+        s1 = Integer.parseInt(textID.getText());
+        s2 = textName.getText();
+        s3 = Integer.parseInt(textAge.getText());
+        s5 = textAddress.getText();
+        char[] pass = textPassword.getPassword();
+        String s8 = new String(pass);
+        try {
+            Connection con = DriverManager.getConnection(Constants.url, Constants.user, Constants.password);
+            PreparedStatement ps = con.prepareStatement("insert into userLogin values (?,?,?,?,?)");
+            ps.setInt(1, s1);
+            ps.setString(2, s2);
+            ps.setInt(3, s3);
+            ps.setString(4, s5);
+            ps.setString(5, s8);
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(buttonSignUp, "Data Saved Successfully");
+            clear();
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+    }
+
+    public void search(int id) {
+        try {
+            conn = DriverManager.getConnection(Constants.url, Constants.user, Constants.password);
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery("select * from userLogin where ID =" + id);
+            while (rs.next()) {
+                int i = rs.getInt("id");
+                textID.setText("" + i);
+                textName.setText(rs.getString("name"));
+                textAge.setText("" + rs.getInt("age"));
+                textAddress.setText(rs.getString("address"));
+            }
+            stmt.close();
+            conn.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        
+
     }
-    public void nextframe() 
-     {
-         this.setVisible(false);    
-//         new test1();
-         }
-    public void update(int id)
-    {
-             s1 = Integer.parseInt(tf1.getText());
-             s2 = tf2.getText();
-             s3 = Integer.parseInt(tf3.getText());
-             s5 = tf5.getText();
-            char[] pass = p1.getPassword();
-            String s8 = new String(pass);
+
+    public void update() {
+        s1 = Integer.parseInt(textID.getText());
+        s2 = textName.getText();
+        s3 = Integer.parseInt(textAge.getText());
+        s5 = textAddress.getText();
+        char[] pass = textPassword.getPassword();
+        String s8 = new String(pass);
         try {
-            conn = DriverManager.getConnection(Constants.url,Constants.user,Constants.password);
+            conn = DriverManager.getConnection(Constants.url, Constants.user, Constants.password);
             System.out.println("Connected to the PostgreSQL server successfully.");
             stmt = conn.createStatement();
-        PreparedStatement ps = conn.prepareStatement("update userLogin set id=?,name=?,age=?,address=?,pass=? where ID ="+id);
-                    ps.setInt(1, s1);
-                    ps.setString(2, s2);
-                    ps.setInt(3, s3);
-                    ps.setString(4, s5);
-                    ps.executeUpdate();
-        System.out.println("id"+ id);
-         stmt.close();
-         conn.close();
-            } catch (SQLException e) {
+            PreparedStatement ps = conn.prepareStatement("update userLogin set id=?,name=?,age=?,address=?,pass=? where ID =" + id);
+            ps.setInt(1, s1);
+            ps.setString(2, s2);
+            ps.setInt(3, s3);
+            ps.setString(4, s5);
+            ps.executeUpdate();
+            System.out.println("id" + id);
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
-        }   
-                JOptionPane.showMessageDialog(bt5, "Data Saved"); 
-           clear(); 
+        }
+        JOptionPane.showMessageDialog(buttonUpdate, "Data Saved");
+        clear();
     }
-    public void clear()
-    {
-            tf1.setText("");
-            tf2.setText("");
-            tf3.setText("");
-            tf5.setText("");
-            tf7.setText("");p1.setText("");
+
+    public void clear() {
+        textID.setText("");
+        textName.setText("");
+        textAge.setText("");
+        textAddress.setText("");
+        textPassword.setText("");
+        textSearch.setText("");
     }
-    public static void main(String args[])
-   {
-       new Registration();     
-    } 
 }
