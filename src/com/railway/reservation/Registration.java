@@ -304,7 +304,6 @@ public class Registration extends javax.swing.JFrame {
     private javax.swing.JTextField textSearch;
     // End of variables declaration//GEN-END:variables
 
-
     public void insert() {
         int x = 0;
         s1 = Integer.parseInt(textID.getText());
@@ -360,13 +359,13 @@ public class Registration extends javax.swing.JFrame {
             conn = DriverManager.getConnection(Constants.url, Constants.user, Constants.password);
             System.out.println("Connected to the PostgreSQL server successfully.");
             stmt = conn.createStatement();
-            PreparedStatement ps = conn.prepareStatement("update userLogin set id=?,name=?,age=?,address=?,pass=? where ID =" + s1);
-            ps.setInt(1, s1);
-            ps.setString(2, s2);
-            ps.setInt(3, s3);
-            ps.setString(4, s5);
+            PreparedStatement ps = conn.prepareStatement("update userLogin set name=?,age=?,address=?,password=? where ID =" + s1);
+            ps.setString(1, s2);
+            ps.setInt(2, s3);
+            ps.setString(3, s5);
+            ps.setInt(4, s1);
             ps.executeUpdate();
-            System.out.println("id" + s1);
+//            System.out.println("id" + s1);
             stmt.close();
             conn.close();
         } catch (SQLException e) {
