@@ -116,6 +116,7 @@ public class TicketFrame extends javax.swing.JFrame implements ActionListener
         jLabel1 = new javax.swing.JLabel();
         OkLeftButton = new javax.swing.JButton();
         RightSelectButton = new javax.swing.JButton();
+        TotalCostLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -171,6 +172,8 @@ public class TicketFrame extends javax.swing.JFrame implements ActionListener
 
         RightSelectButton.setText("Select To");
 
+        TotalCostLabel.setText("jLabel2");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -193,7 +196,8 @@ public class TicketFrame extends javax.swing.JFrame implements ActionListener
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(FromStationLabelField)
                                     .addComponent(RightSelectButton)
-                                    .addComponent(ToStationLabelField))))
+                                    .addComponent(ToStationLabelField)
+                                    .addComponent(TotalCostLabel))))
                         .addContainerGap(36, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -244,7 +248,9 @@ public class TicketFrame extends javax.swing.JFrame implements ActionListener
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(labelQuantity)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(TotalCostLabel))
                 .addGap(24, 24, 24)
                 .addComponent(buttonBookTicket)
                 .addGap(184, 184, 184))
@@ -286,6 +292,7 @@ public class TicketFrame extends javax.swing.JFrame implements ActionListener
     private javax.swing.JLabel ToLabel;
     private javax.swing.JList<String> ToList;
     public javax.swing.JLabel ToStationLabelField;
+    private javax.swing.JLabel TotalCostLabel;
     private javax.swing.JButton buttonBookTicket;
     private javax.swing.JLabel fromLabel;
     private javax.swing.JLabel jLabel1;

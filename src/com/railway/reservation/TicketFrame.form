@@ -43,6 +43,7 @@
                                   <Component id="FromStationLabelField" min="-2" max="-2" attributes="0"/>
                                   <Component id="RightSelectButton" min="-2" max="-2" attributes="0"/>
                                   <Component id="ToStationLabelField" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="TotalCostLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -111,7 +112,10 @@
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="labelQuantity" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="TotalCostLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
               <Component id="buttonBookTicket" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="184" max="-2" attributes="0"/>
@@ -239,6 +243,11 @@
     <Component class="javax.swing.JButton" name="RightSelectButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Select To"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="TotalCostLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jLabel2"/>
       </Properties>
     </Component>
   </SubComponents>
