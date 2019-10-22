@@ -239,7 +239,7 @@ public class Registration extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonSignUpActionPerformed
 
     private void buttonLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonLogInActionPerformed
-        // TODO add your handling code here:
+        openLoginFrame();
     }//GEN-LAST:event_buttonLogInActionPerformed
 
     private void buttonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonUpdateActionPerformed
@@ -389,5 +389,10 @@ public class Registration extends javax.swing.JFrame {
         textAddress.setText("");
         textPassword.setText("");
         textSearch.setText("");
+    }
+
+    private void openLoginFrame() {
+        setVisible(false);
+        new Login().setVisible(true);
     }
 }
