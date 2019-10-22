@@ -142,7 +142,7 @@ public class Login extends javax.swing.JFrame {
             username = textLoginUserName.getText();
             conn = DriverManager.getConnection(Constants.url, Constants.user, Constants.password);
             stmt = conn.createStatement();
-            rs = stmt.executeQuery("select * from userlogin where username =" +username);
+            rs = stmt.executeQuery("select * from userlogin where username = '" + username + "'");
             if (rs.next() == false && count == 0) {
                 JOptionPane.showMessageDialog(buttonLogin, "Enter a valid id/password");
                 stmt.close();

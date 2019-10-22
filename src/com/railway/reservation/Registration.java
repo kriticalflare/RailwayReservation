@@ -323,7 +323,7 @@ public class Registration extends javax.swing.JFrame {
             conn = DriverManager.getConnection(Constants.url, Constants.user, Constants.password);
             System.out.println("Connected to the PostgreSQL server successfully.");
             stmt = conn.createStatement();
-            PreparedStatement ps = conn.prepareStatement("update userLogin set fname=?,age=?,address=?,pass=? where username =" + s1);
+            PreparedStatement ps = conn.prepareStatement("update userLogin set fname=?,age=?,address=?,pass=? where username = '" + s1 + "'");
             ps.setString(1, s2);
             ps.setInt(2, s3);
             ps.setString(3, s5);
