@@ -57,7 +57,8 @@ public class Registration extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         signUpHeader = new javax.swing.JLabel();
         labelUserName = new javax.swing.JLabel();
@@ -91,29 +92,45 @@ public class Registration extends javax.swing.JFrame {
         labelPassword.setText("Password");
 
         buttonSignUp.setText("Sign up");
-        buttonSignUp.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        buttonSignUp.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 buttonSignUpActionPerformed(evt);
             }
         });
 
         buttonLogIn.setText("Login");
-        buttonLogIn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        buttonLogIn.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 buttonLogInActionPerformed(evt);
             }
         });
 
+        textName.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                textNameActionPerformed(evt);
+            }
+        });
+
         buttonUpdate.setText("Update");
-        buttonUpdate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        buttonUpdate.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 buttonUpdateActionPerformed(evt);
             }
         });
 
         buttonClear.setText("Clear");
-        buttonClear.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        buttonClear.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 buttonClearActionPerformed(evt);
             }
         });
@@ -122,63 +139,54 @@ public class Registration extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(207, 207, 207)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(labelPassword)
-                        .addGap(185, 185, 185)
-                        .addComponent(textPassword))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(labelAddress)
-                        .addGap(194, 194, 194)
-                        .addComponent(textAddress))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(labelAge)
-                        .addGap(218, 218, 218)
-                        .addComponent(textAge))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelName)
-                            .addComponent(labelUserName))
-                        .addGap(182, 182, 182)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(textName)
-                            .addComponent(textUserName))))
-                .addGap(126, 126, 126))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(477, 477, 477)
-                        .addComponent(signUpHeader))
+                        .addGap(51, 51, 51)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelName)
+                            .addComponent(labelUserName)
+                            .addComponent(labelAge)
+                            .addComponent(labelAddress)
+                            .addComponent(labelPassword))
+                        .addGap(52, 52, 52)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(textPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(textAddress)
+                                .addComponent(textAge, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                                .addComponent(textUserName)
+                                .addComponent(textName)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(33, 33, 33)
+                                    .addComponent(signUpHeader)))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(290, 290, 290)
+                        .addGap(46, 46, 46)
                         .addComponent(buttonSignUp)
-                        .addGap(71, 71, 71)
+                        .addGap(51, 51, 51)
                         .addComponent(buttonLogIn)
-                        .addGap(47, 47, 47)
+                        .addGap(44, 44, 44)
                         .addComponent(buttonUpdate)
-                        .addGap(59, 59, 59)
+                        .addGap(34, 34, 34)
                         .addComponent(buttonClear)))
-                .addContainerGap(289, Short.MAX_VALUE))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(143, 143, 143)
+                .addGap(38, 38, 38)
                 .addComponent(signUpHeader)
-                .addGap(54, 54, 54)
+                .addGap(45, 45, 45)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(labelUserName)
-                            .addComponent(textUserName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(labelName)
-                            .addComponent(textName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(labelAge))
+                    .addComponent(labelUserName)
+                    .addComponent(textUserName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelName)
+                    .addComponent(textName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelAge)
                     .addComponent(textAge, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -188,13 +196,13 @@ public class Registration extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelPassword)
                     .addComponent(textPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buttonSignUp)
                     .addComponent(buttonLogIn)
                     .addComponent(buttonUpdate)
                     .addComponent(buttonClear))
-                .addGap(94, 94, 94))
+                .addGap(21, 21, 21))
         );
 
         pack();
@@ -215,6 +223,11 @@ public class Registration extends javax.swing.JFrame {
     private void buttonClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonClearActionPerformed
         clear();
     }//GEN-LAST:event_buttonClearActionPerformed
+
+    private void textNameActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_textNameActionPerformed
+    {//GEN-HEADEREND:event_textNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textNameActionPerformed
 
     /**
      * @param args the command line arguments
@@ -278,6 +291,7 @@ public class Registration extends javax.swing.JFrame {
         char[] pass = textPassword.getPassword();
         String s8 = new String(pass);
         try {
+            System.out.println(Constants.password);
             Connection con = DriverManager.getConnection(Constants.url, Constants.user, Constants.password);
             PreparedStatement ps = con.prepareStatement("insert into userLogin values (?,?,?,?,?)");
             ps.setString(1, s1);
