@@ -40,12 +40,13 @@
               <EmptySpace min="-2" pref="389" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="loginHeader" min="-2" max="-2" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Component id="buttonLogin" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="buttonLoginBack" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="421" max="32767" attributes="0"/>
+              <EmptySpace pref="396" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -65,7 +66,10 @@
                   <Component id="textLoginPassword" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
-              <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="buttonLogin" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="buttonLoginBack" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace pref="176" max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -100,10 +104,18 @@
     </Component>
     <Component class="javax.swing.JTextField" name="textLoginPassword">
     </Component>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="buttonLogin">
       <Properties>
         <Property name="text" type="java.lang.String" value="Login"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="buttonLoginBack">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Back"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonLoginBackActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
