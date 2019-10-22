@@ -18,6 +18,7 @@ package com.railway.reservation;
 import com.railway.reservation.constants.Constants;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -141,8 +142,9 @@ public class Login extends javax.swing.JFrame {
             String enteredPass = textLoginPassword.getText();
             username = textLoginUserName.getText();
             conn = DriverManager.getConnection(Constants.url, Constants.user, Constants.password);
-            stmt = conn.createStatement();
-            rs = stmt.executeQuery("select * from userlogin where username = '" + username + "'");
+            PreparedStatement stmt = conn.prepareStatement("select * from userlogin where username = ?");
+            stmt.setString(1, username);
+            rs = stmt.executeQuery();
             if (rs.next() == false && count == 0) {
                 JOptionPane.showMessageDialog(buttonLogin, "Enter a valid id/password");
                 stmt.close();
