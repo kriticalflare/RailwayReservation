@@ -27,6 +27,9 @@ import java.util.Vector;
 import javax.swing.JButton;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author kriticalflare
@@ -47,7 +50,7 @@ public class TicketFrame extends javax.swing.JFrame implements ActionListener
     {
         initComponents();
         OkLeftButton.addActionListener(this);
-        
+        buttonBookTicket.addActionListener(this);
         RightSelectButton.addActionListener(this);
         try
         {
@@ -78,6 +81,10 @@ public class TicketFrame extends javax.swing.JFrame implements ActionListener
         {
             FinalToStation = (String) ToList.getSelectedValue();
             ToStationLabelField.setText(FinalToStation);
+        } else if ("Book it!".equals(((JButton) e.getSource()).getText()))
+        {
+            JOptionPane.showMessageDialog(null, "Ticket booked successfully!");
+            System.exit(0);
         }
 
     }
@@ -180,9 +187,13 @@ public class TicketFrame extends javax.swing.JFrame implements ActionListener
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(FromStationLabelField)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ToStationLabelField))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(34, 34, 34)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(FromStationLabelField)
+                                    .addComponent(RightSelectButton)
+                                    .addComponent(ToStationLabelField))))
                         .addContainerGap(36, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -199,13 +210,9 @@ public class TicketFrame extends javax.swing.JFrame implements ActionListener
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(72, 72, 72)
                                 .addComponent(buttonBookTicket))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(labelBoarding)
-                                    .addComponent(OkLeftButton))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(RightSelectButton)))))
-                .addGap(72, 72, 72))
+                            .addComponent(labelBoarding)
+                            .addComponent(OkLeftButton))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -221,32 +228,26 @@ public class TicketFrame extends javax.swing.JFrame implements ActionListener
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
                     .addComponent(jScrollPane1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(FromStationLabelField)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(27, 27, 27)
-                                .addComponent(labelBoarding))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(5, 5, 5)
-                                .addComponent(RightSelectButton)))
-                        .addGap(13, 13, 13)
-                        .addComponent(labelAlighting)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(labelBerth)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(labelQuantity)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel1)
-                        .addGap(24, 24, 24)
-                        .addComponent(buttonBookTicket)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ToStationLabelField))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(OkLeftButton)))
-                .addGap(164, 164, 164))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(RightSelectButton)
+                    .addComponent(OkLeftButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelBoarding)
+                    .addComponent(FromStationLabelField))
+                .addGap(13, 13, 13)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelAlighting)
+                    .addComponent(ToStationLabelField))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(labelBerth)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(labelQuantity)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel1)
+                .addGap(24, 24, 24)
+                .addComponent(buttonBookTicket)
+                .addGap(184, 184, 184))
         );
 
         pack();
