@@ -36,8 +36,8 @@ import javax.swing.JTextField;
  */
 public class Registration extends javax.swing.JFrame {
 
-    Integer s1, s3;
-    String s2, s5, pass;
+    Integer s3;
+    String s1, s2, s5, pass;
     Connection conn = null;
     Statement stmt = null;
     ResultSet rs = null;
@@ -60,22 +60,18 @@ public class Registration extends javax.swing.JFrame {
     private void initComponents() {
 
         signUpHeader = new javax.swing.JLabel();
-        labelId = new javax.swing.JLabel();
+        labelUserName = new javax.swing.JLabel();
         labelName = new javax.swing.JLabel();
         labelAge = new javax.swing.JLabel();
         labelAddress = new javax.swing.JLabel();
         labelPassword = new javax.swing.JLabel();
         buttonSignUp = new javax.swing.JButton();
         buttonLogIn = new javax.swing.JButton();
-        searchHeader = new javax.swing.JLabel();
-        labelSearch = new javax.swing.JLabel();
-        buttonSearch = new javax.swing.JButton();
-        textID = new javax.swing.JTextField();
+        textUserName = new javax.swing.JTextField();
         textName = new javax.swing.JTextField();
         textAge = new javax.swing.JTextField();
         textAddress = new javax.swing.JTextField();
         textPassword = new javax.swing.JPasswordField();
-        textSearch = new javax.swing.JTextField();
         buttonUpdate = new javax.swing.JButton();
         buttonClear = new javax.swing.JButton();
 
@@ -84,7 +80,7 @@ public class Registration extends javax.swing.JFrame {
         signUpHeader.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         signUpHeader.setText("Login/Signup");
 
-        labelId.setText("ID");
+        labelUserName.setText("Username");
 
         labelName.setText("Name");
 
@@ -108,17 +104,6 @@ public class Registration extends javax.swing.JFrame {
             }
         });
 
-        searchHeader.setText("Or Search for your account");
-
-        labelSearch.setText("Enter ID to be searched");
-
-        buttonSearch.setText("Search");
-        buttonSearch.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonSearchActionPerformed(evt);
-            }
-        });
-
         buttonUpdate.setText("Update");
         buttonUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -138,56 +123,44 @@ public class Registration extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(207, 207, 207)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(207, 207, 207)
+                        .addComponent(labelPassword)
+                        .addGap(185, 185, 185)
+                        .addComponent(textPassword))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(labelAddress)
+                        .addGap(194, 194, 194)
+                        .addComponent(textAddress))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(labelAge)
+                        .addGap(218, 218, 218)
+                        .addComponent(textAge))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(labelPassword)
-                                .addGap(185, 185, 185)
-                                .addComponent(textPassword))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(labelAddress)
-                                .addGap(194, 194, 194)
-                                .addComponent(textAddress))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(labelAge)
-                                .addGap(218, 218, 218)
-                                .addComponent(textAge))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(labelName)
-                                    .addComponent(labelId))
-                                .addGap(207, 207, 207)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(textID)
-                                    .addComponent(textName)))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(48, 48, 48)
-                        .addComponent(labelSearch)
-                        .addGap(108, 108, 108)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(buttonSignUp)
-                                .addGap(53, 53, 53)
-                                .addComponent(buttonLogIn)
-                                .addGap(60, 60, 60)
-                                .addComponent(buttonUpdate)
-                                .addGap(65, 65, 65)
-                                .addComponent(buttonClear))
-                            .addComponent(textSearch))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
-                        .addComponent(buttonSearch)))
+                            .addComponent(labelName)
+                            .addComponent(labelUserName))
+                        .addGap(182, 182, 182)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(textName)
+                            .addComponent(textUserName))))
                 .addGap(126, 126, 126))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(427, 427, 427)
-                        .addComponent(searchHeader))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(477, 477, 477)
-                        .addComponent(signUpHeader)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(signUpHeader))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(290, 290, 290)
+                        .addComponent(buttonSignUp)
+                        .addGap(71, 71, 71)
+                        .addComponent(buttonLogIn)
+                        .addGap(47, 47, 47)
+                        .addComponent(buttonUpdate)
+                        .addGap(59, 59, 59)
+                        .addComponent(buttonClear)))
+                .addContainerGap(289, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -198,8 +171,8 @@ public class Registration extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(labelId)
-                            .addComponent(textID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(labelUserName)
+                            .addComponent(textUserName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(labelName)
@@ -215,20 +188,13 @@ public class Registration extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelPassword)
                     .addComponent(textPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 101, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buttonSignUp)
                     .addComponent(buttonLogIn)
                     .addComponent(buttonUpdate)
                     .addComponent(buttonClear))
-                .addGap(70, 70, 70)
-                .addComponent(searchHeader)
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(textSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelSearch)
-                    .addComponent(buttonSearch))
-                .addGap(23, 23, 23))
+                .addGap(94, 94, 94))
         );
 
         pack();
@@ -245,10 +211,6 @@ public class Registration extends javax.swing.JFrame {
     private void buttonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonUpdateActionPerformed
         update();
     }//GEN-LAST:event_buttonUpdateActionPerformed
-
-    private void buttonSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSearchActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_buttonSearchActionPerformed
 
     private void buttonClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonClearActionPerformed
         clear();
@@ -292,28 +254,24 @@ public class Registration extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonClear;
     private javax.swing.JButton buttonLogIn;
-    private javax.swing.JButton buttonSearch;
     private javax.swing.JButton buttonSignUp;
     private javax.swing.JButton buttonUpdate;
     private javax.swing.JLabel labelAddress;
     private javax.swing.JLabel labelAge;
-    private javax.swing.JLabel labelId;
     private javax.swing.JLabel labelName;
     private javax.swing.JLabel labelPassword;
-    private javax.swing.JLabel labelSearch;
-    private javax.swing.JLabel searchHeader;
+    private javax.swing.JLabel labelUserName;
     private javax.swing.JLabel signUpHeader;
     private javax.swing.JTextField textAddress;
     private javax.swing.JTextField textAge;
-    private javax.swing.JTextField textID;
     private javax.swing.JTextField textName;
     private javax.swing.JPasswordField textPassword;
-    private javax.swing.JTextField textSearch;
+    private javax.swing.JTextField textUserName;
     // End of variables declaration//GEN-END:variables
 
     public void insert() {
         int x = 0;
-        s1 = Integer.parseInt(textID.getText());
+        s1 = textUserName.getText();
         s2 = textName.getText();
         s3 = Integer.parseInt(textAge.getText());
         s5 = textAddress.getText();
@@ -322,7 +280,7 @@ public class Registration extends javax.swing.JFrame {
         try {
             Connection con = DriverManager.getConnection(Constants.url, Constants.user, Constants.password);
             PreparedStatement ps = con.prepareStatement("insert into userLogin values (?,?,?,?,?)");
-            ps.setInt(1, s1);
+            ps.setString(1, s1);
             ps.setString(2, s2);
             ps.setInt(3, s3);
             ps.setString(4, s5);
@@ -339,11 +297,10 @@ public class Registration extends javax.swing.JFrame {
         try {
             conn = DriverManager.getConnection(Constants.url, Constants.user, Constants.password);
             stmt = conn.createStatement();
-            rs = stmt.executeQuery("select * from userLogin where ID =" + id);
+            rs = stmt.executeQuery("select * from userLogin where username =" + id);
             while (rs.next()) {
-                int i = rs.getInt("id");
-                textID.setText("" + i);
-                textName.setText(rs.getString("name"));
+                textUserName.setText("" + rs.getString("username"));
+                textName.setText(rs.getString("fname"));
                 textAge.setText("" + rs.getInt("age"));
                 textAddress.setText(rs.getString("address"));
             }
@@ -356,7 +313,7 @@ public class Registration extends javax.swing.JFrame {
     }
 
     public void update() {
-        s1 = Integer.parseInt(textID.getText());
+        s1 = textUserName.getText();
         s2 = textName.getText();
         s3 = Integer.parseInt(textAge.getText());
         s5 = textAddress.getText();
@@ -366,13 +323,12 @@ public class Registration extends javax.swing.JFrame {
             conn = DriverManager.getConnection(Constants.url, Constants.user, Constants.password);
             System.out.println("Connected to the PostgreSQL server successfully.");
             stmt = conn.createStatement();
-            PreparedStatement ps = conn.prepareStatement("update userLogin set name=?,age=?,address=?,password=? where ID =" + s1);
+            PreparedStatement ps = conn.prepareStatement("update userLogin set fname=?,age=?,address=?,pass=? where username =" + s1);
             ps.setString(1, s2);
             ps.setInt(2, s3);
             ps.setString(3, s5);
-            ps.setInt(4, s1);
+            ps.setString(4, s1);
             ps.executeUpdate();
-//            System.out.println("id" + s1);
             stmt.close();
             conn.close();
         } catch (SQLException e) {
@@ -383,12 +339,11 @@ public class Registration extends javax.swing.JFrame {
     }
 
     public void clear() {
-        textID.setText("");
+        textUserName.setText("");
         textName.setText("");
         textAge.setText("");
         textAddress.setText("");
         textPassword.setText("");
-        textSearch.setText("");
     }
 
     private void openLoginFrame() {

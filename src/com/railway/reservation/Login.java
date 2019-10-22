@@ -50,8 +50,8 @@ public class Login extends javax.swing.JFrame {
     private void initComponents() {
 
         loginHeader = new javax.swing.JLabel();
-        textLoginID = new javax.swing.JTextField();
-        lablelLoginID = new javax.swing.JLabel();
+        textLoginUserName = new javax.swing.JTextField();
+        lablelLoginUserName = new javax.swing.JLabel();
         labelLoginPassword = new javax.swing.JLabel();
         textLoginPassword = new javax.swing.JTextField();
         buttonLogin = new javax.swing.JButton();
@@ -62,8 +62,8 @@ public class Login extends javax.swing.JFrame {
         loginHeader.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
         loginHeader.setText("Login");
 
-        lablelLoginID.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lablelLoginID.setText("ID");
+        lablelLoginUserName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lablelLoginUserName.setText("Username");
 
         labelLoginPassword.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelLoginPassword.setText("Password");
@@ -89,11 +89,11 @@ public class Login extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lablelLoginID)
+                    .addComponent(lablelLoginUserName)
                     .addComponent(labelLoginPassword))
                 .addGap(127, 127, 127)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(textLoginID, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
+                    .addComponent(textLoginUserName, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
                     .addComponent(textLoginPassword))
                 .addGap(243, 243, 243))
             .addGroup(layout.createSequentialGroup()
@@ -113,8 +113,8 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(loginHeader)
                 .addGap(79, 79, 79)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(textLoginID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lablelLoginID))
+                    .addComponent(textLoginUserName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lablelLoginUserName))
                 .addGap(39, 39, 39)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelLoginPassword)
@@ -137,19 +137,19 @@ public class Login extends javax.swing.JFrame {
     private void buttonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonLoginActionPerformed
         try {
             int count = 0;
-            int id;
+            String username;
             String enteredPass = textLoginPassword.getText();
-            id = Integer.parseInt(textLoginID.getText());
+            username = textLoginUserName.getText();
             conn = DriverManager.getConnection(Constants.url, Constants.user, Constants.password);
             stmt = conn.createStatement();
-            rs = stmt.executeQuery("select * from userLogin where ID =" + id);
+            rs = stmt.executeQuery("select * from userlogin where username =" +username);
             if (rs.next() == false && count == 0) {
                 JOptionPane.showMessageDialog(buttonLogin, "Enter a valid id/password");
                 stmt.close();
                 conn.close();
             } else {
 
-                String pass = rs.getString("password");
+                String pass = rs.getString("pass");
                 if (pass.equals(enteredPass)) {
                     JOptionPane.showMessageDialog(buttonLogin, "Welcome"); //Placeholder
                 }else{
@@ -204,9 +204,9 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JButton buttonLogin;
     private javax.swing.JButton buttonLoginBack;
     private javax.swing.JLabel labelLoginPassword;
-    private javax.swing.JLabel lablelLoginID;
+    private javax.swing.JLabel lablelLoginUserName;
     private javax.swing.JLabel loginHeader;
-    private javax.swing.JTextField textLoginID;
     private javax.swing.JTextField textLoginPassword;
+    private javax.swing.JTextField textLoginUserName;
     // End of variables declaration//GEN-END:variables
 }
