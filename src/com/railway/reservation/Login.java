@@ -54,9 +54,9 @@ public class Login extends javax.swing.JFrame {
         textLoginUserName = new javax.swing.JTextField();
         lablelLoginUserName = new javax.swing.JLabel();
         labelLoginPassword = new javax.swing.JLabel();
-        textLoginPassword = new javax.swing.JTextField();
         buttonLogin = new javax.swing.JButton();
         buttonLoginBack = new javax.swing.JButton();
+        textLoginPassword = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -87,6 +87,15 @@ public class Login extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(389, 389, 389)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(loginHeader)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(buttonLogin)
+                        .addGap(18, 18, 18)
+                        .addComponent(buttonLoginBack)))
+                .addContainerGap(396, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -97,15 +106,6 @@ public class Login extends javax.swing.JFrame {
                     .addComponent(textLoginUserName, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
                     .addComponent(textLoginPassword))
                 .addGap(243, 243, 243))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(389, 389, 389)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(loginHeader)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(buttonLogin)
-                        .addGap(18, 18, 18)
-                        .addComponent(buttonLoginBack)))
-                .addContainerGap(396, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -139,7 +139,8 @@ public class Login extends javax.swing.JFrame {
         try {
             int count = 0;
             String username;
-            String enteredPass = textLoginPassword.getText();
+            char[] enteredPassC = textLoginPassword.getPassword();
+            String enteredPass = new String(enteredPassC);
             username = textLoginUserName.getText();
             conn = DriverManager.getConnection(Constants.url, Constants.user, Constants.password);
             PreparedStatement stmt = conn.prepareStatement("select * from userlogin where username = ?");
@@ -208,7 +209,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel labelLoginPassword;
     private javax.swing.JLabel lablelLoginUserName;
     private javax.swing.JLabel loginHeader;
-    private javax.swing.JTextField textLoginPassword;
+    private javax.swing.JPasswordField textLoginPassword;
     private javax.swing.JTextField textLoginUserName;
     // End of variables declaration//GEN-END:variables
 }
