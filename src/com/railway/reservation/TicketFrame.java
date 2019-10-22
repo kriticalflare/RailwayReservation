@@ -15,17 +15,71 @@
  */
 package com.railway.reservation;
 
+import com.railway.reservation.constants.Constants;
+import java.awt.event.ActionEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Vector;
+import javax.swing.JButton;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 /**
  *
  * @author kriticalflare
  */
-public class TicketFrame extends javax.swing.JFrame {
+public class TicketFrame extends javax.swing.JFrame implements ActionListener
+{
+
+    ResultSet rs;
+
+    Vector arr = new Vector();
+    String FinalFromStation = "";
+    String FinalToStation = "";
 
     /**
      * Creates new form TicketFrame
      */
-    public TicketFrame() {
+    public TicketFrame()
+    {
         initComponents();
+        OkLeftButton.addActionListener(this);
+        
+        RightSelectButton.addActionListener(this);
+        try
+        {
+            Connection conn = DriverManager.getConnection(Constants.url, Constants.user, Constants.password);
+            String URL = "Select id, sname FROM stations";
+            rs = conn.createStatement().executeQuery(URL);
+            while (rs.next())
+            {
+                String str = rs.getString("sname");
+                arr.add(str);
+            }
+            FromList.setListData(arr);
+            ToList.setListData(arr);
+        } catch (SQLException e)
+        {
+            System.out.println("Error at Ticketframe select from table stations");
+        }
+    }
+
+    public void actionPerformed(ActionEvent e)
+    {
+        System.out.println(((JButton) e.getSource()).getText());
+        if ("Select From".equals(((JButton) e.getSource()).getText()))
+        {
+            FinalFromStation = (String) FromList.getSelectedValue();
+            FromStationLabelField.setText(FinalFromStation);
+        } else if ("Select To".equals(((JButton) e.getSource()).getText()))
+        {
+            FinalToStation = (String) ToList.getSelectedValue();
+            ToStationLabelField.setText(FinalToStation);
+        }
+
     }
 
     /**
@@ -35,7 +89,8 @@ public class TicketFrame extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         ticketsHeader = new javax.swing.JLabel();
         labelBoarding = new javax.swing.JLabel();
@@ -43,6 +98,17 @@ public class TicketFrame extends javax.swing.JFrame {
         labelBerth = new javax.swing.JLabel();
         labelQuantity = new javax.swing.JLabel();
         buttonBookTicket = new javax.swing.JButton();
+        fromLabel = new javax.swing.JLabel();
+        ToLabel = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        FromList = new javax.swing.JList<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        ToList = new javax.swing.JList<>();
+        FromStationLabelField = new javax.swing.JLabel();
+        ToStationLabelField = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        OkLeftButton = new javax.swing.JButton();
+        RightSelectButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -57,48 +123,130 @@ public class TicketFrame extends javax.swing.JFrame {
         labelQuantity.setText("Quantity");
 
         buttonBookTicket.setText("Book it!");
-        buttonBookTicket.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        buttonBookTicket.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 buttonBookTicketActionPerformed(evt);
             }
         });
+
+        fromLabel.setText("From");
+
+        ToLabel.setText("To");
+
+        FromList.setModel(new javax.swing.AbstractListModel<String>()
+        {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane1.setViewportView(FromList);
+
+        ToList.setModel(new javax.swing.AbstractListModel<String>()
+        {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane2.setViewportView(ToList);
+
+        jLabel1.setText("Total Cost");
+
+        OkLeftButton.setText("Select From");
+        OkLeftButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                OkLeftButtonActionPerformed(evt);
+            }
+        });
+
+        RightSelectButton.setText("Select To");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(buttonBookTicket)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(158, 158, 158)
-                            .addComponent(ticketsHeader))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(84, 84, 84)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(labelAlighting)
-                                .addComponent(labelBoarding)
-                                .addComponent(labelBerth)
-                                .addComponent(labelQuantity)))))
-                .addContainerGap(171, Short.MAX_VALUE))
+                .addGap(58, 58, 58)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(fromLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(ToLabel)
+                        .addGap(102, 102, 102))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(FromStationLabelField)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ToStationLabelField))
+                        .addContainerGap(36, Short.MAX_VALUE))))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(158, 158, 158)
+                        .addComponent(ticketsHeader))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(82, 82, 82)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelAlighting)
+                            .addComponent(labelBerth)
+                            .addComponent(labelQuantity)
+                            .addComponent(jLabel1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(72, 72, 72)
+                                .addComponent(buttonBookTicket))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(labelBoarding)
+                                    .addComponent(OkLeftButton))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(RightSelectButton)))))
+                .addGap(72, 72, 72))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(ticketsHeader)
-                .addGap(32, 32, 32)
-                .addComponent(labelBoarding)
-                .addGap(13, 13, 13)
-                .addComponent(labelAlighting)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(fromLabel)
+                    .addComponent(ToLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(labelBerth)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(labelQuantity)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
-                .addComponent(buttonBookTicket)
-                .addGap(59, 59, 59))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(FromStationLabelField)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(27, 27, 27)
+                                .addComponent(labelBoarding))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(5, 5, 5)
+                                .addComponent(RightSelectButton)))
+                        .addGap(13, 13, 13)
+                        .addComponent(labelAlighting)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(labelBerth)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(labelQuantity)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel1)
+                        .addGap(24, 24, 24)
+                        .addComponent(buttonBookTicket)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ToStationLabelField))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(OkLeftButton)))
+                .addGap(164, 164, 164))
         );
 
         pack();
@@ -108,43 +256,40 @@ public class TicketFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_buttonBookTicketActionPerformed
 
+    private void OkLeftButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_OkLeftButtonActionPerformed
+    {//GEN-HEADEREND:event_OkLeftButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_OkLeftButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TicketFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TicketFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TicketFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TicketFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    public static void main(String args[])
+    {
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
+        java.awt.EventQueue.invokeLater(new Runnable()
+        {
+            public void run()
+            {
                 new TicketFrame().setVisible(true);
             }
         });
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JList<String> FromList;
+    public javax.swing.JLabel FromStationLabelField;
+    private javax.swing.JButton OkLeftButton;
+    private javax.swing.JButton RightSelectButton;
+    private javax.swing.JLabel ToLabel;
+    private javax.swing.JList<String> ToList;
+    public javax.swing.JLabel ToStationLabelField;
     private javax.swing.JButton buttonBookTicket;
+    private javax.swing.JLabel fromLabel;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel labelAlighting;
     private javax.swing.JLabel labelBerth;
     private javax.swing.JLabel labelBoarding;
