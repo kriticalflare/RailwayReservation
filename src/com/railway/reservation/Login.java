@@ -15,11 +15,23 @@
  */
 package com.railway.reservation;
 
+import com.railway.reservation.constants.Constants;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author kriticalflare
  */
 public class Login extends javax.swing.JFrame {
+
+    Connection conn = null;
+    Statement stmt = null;
+    ResultSet rs = null;
 
     /**
      * Creates new form Login
@@ -57,6 +69,11 @@ public class Login extends javax.swing.JFrame {
         labelLoginPassword.setText("Password");
 
         buttonLogin.setText("Login");
+        buttonLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonLoginActionPerformed(evt);
+            }
+        });
 
         buttonLoginBack.setText("Back");
         buttonLoginBack.addActionListener(new java.awt.event.ActionListener() {
@@ -116,6 +133,37 @@ public class Login extends javax.swing.JFrame {
         setVisible(false);
         new Registration().setVisible(true);
     }//GEN-LAST:event_buttonLoginBackActionPerformed
+
+    private void buttonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonLoginActionPerformed
+        try {
+            int count = 0;
+            int id;
+            String enteredPass = textLoginPassword.getText();
+            id = Integer.parseInt(textLoginID.getText());
+            conn = DriverManager.getConnection(Constants.url, Constants.user, Constants.password);
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery("select * from userLogin where ID =" + id);
+            if (rs.next() == false && count == 0) {
+                JOptionPane.showMessageDialog(buttonLogin, "Enter a valid id/password");
+                stmt.close();
+                conn.close();
+            } else {
+
+                String pass = rs.getString("password");
+                if (pass.equals(enteredPass)) {
+                    JOptionPane.showMessageDialog(buttonLogin, "Welcome"); //Placeholder
+                }else{
+                    JOptionPane.showMessageDialog(buttonLogin, "Enter a valid id/password");
+                }
+                stmt.close();
+                conn.close();
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+    }//GEN-LAST:event_buttonLoginActionPerformed
 
     /**
      * @param args the command line arguments
