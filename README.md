@@ -8,12 +8,6 @@ For now clone the project and create a postgres database named "railway" with re
 
 run the following psql query for that 
 
-create table userlogin (
-  id integer,
-  name varchar(30),
-  age integer,
-  address varchar(30),
-  password varchar
-)
+create table userlogin ( username varchar(30) Primary key, fname varchar(30), age integer, address varchar(30), pass varchar(30) )
 
 Any future tables that would be needed will be updated here and maybe the tables would be setup by the program itself later
