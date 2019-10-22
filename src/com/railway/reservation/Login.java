@@ -159,7 +159,7 @@ public class Login extends javax.swing.JFrame {
 
                 String pass = rs.getString("pass");
                 if (pass.equals(enteredPass)) {
-                    JOptionPane.showMessageDialog(buttonLogin, "Welcome"); //Placeholder
+                    openTicketFrame();
                 }else{
                     JOptionPane.showMessageDialog(buttonLogin, "Enter a valid id/password");
                 }
@@ -206,6 +206,10 @@ public class Login extends javax.swing.JFrame {
                 new Login().setVisible(true);
             }
         });
+    }
+    private void openTicketFrame() {
+        setVisible(false);
+        new TicketFrame().setVisible(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
