@@ -29,62 +29,69 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
 
 /**
  *
  * @author kriticalflare
  */
-public class TicketFrame extends javax.swing.JFrame implements ActionListener
-{
+public class TicketFrame extends javax.swing.JFrame implements ActionListener {
 
     ResultSet rs;
 
     Vector arr = new Vector();
     String FinalFromStation = "";
     String FinalToStation = "";
+    int fromStationIndex = -1;
+    int toStationIndex = -1;
+    int ticketQuantity = -1;
+    int amount = -1;
+    int berthCost = 0; // should be non zero only for first class
 
     /**
      * Creates new form TicketFrame
      */
-    public TicketFrame()
-    {
+    public TicketFrame() {
         initComponents();
         OkLeftButton.addActionListener(this);
         buttonBookTicket.addActionListener(this);
         RightSelectButton.addActionListener(this);
-        try
-        {
+        try {
             Connection conn = DriverManager.getConnection(Constants.url, Constants.user, Constants.password);
             String URL = "Select id, sname FROM stations";
             rs = conn.createStatement().executeQuery(URL);
-            while (rs.next())
-            {
+            while (rs.next()) {
                 String str = rs.getString("sname");
                 arr.add(str);
             }
             FromList.setListData(arr);
             ToList.setListData(arr);
-        } catch (SQLException e)
-        {
+        } catch (SQLException e) {
             System.out.println("Error at Ticketframe select from table stations");
         }
     }
 
-    public void actionPerformed(ActionEvent e)
-    {
+    public void actionPerformed(ActionEvent e) {
         System.out.println(((JButton) e.getSource()).getText());
-        if ("Select From".equals(((JButton) e.getSource()).getText()))
-        {
+        if ("Select From".equals(((JButton) e.getSource()).getText())) {
             FinalFromStation = (String) FromList.getSelectedValue();
+            fromStationIndex = FromList.getSelectedIndex();
             FromStationLabelField.setText(FinalFromStation);
-        } else if ("Select To".equals(((JButton) e.getSource()).getText()))
-        {
+        } else if ("Select To".equals(((JButton) e.getSource()).getText())) {
             FinalToStation = (String) ToList.getSelectedValue();
+            toStationIndex = ToList.getSelectedIndex();
             ToStationLabelField.setText(FinalToStation);
-        } else if ("Book it!".equals(((JButton) e.getSource()).getText()))
-        {
-            JOptionPane.showMessageDialog(null, "Ticket booked successfully!");
-            System.exit(0);
+        } else if ("Book it!".equals(((JButton) e.getSource()).getText())) {
+            if (radioBerthType.isSelected()) {
+                berthCost = 50;
+            }
+            int cost = calculateTicketAmount();
+            if (cost != -1) {
+                TotalCostLabel.setText(String.valueOf(cost));
+            } else {
+                JOptionPane.showMessageDialog(null, "Complete all the fields!");
+            }
+//            System.exit(0);
         }
 
     }
@@ -96,8 +103,7 @@ public class TicketFrame extends javax.swing.JFrame implements ActionListener
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         ticketsHeader = new javax.swing.JLabel();
         labelBoarding = new javax.swing.JLabel();
@@ -117,6 +123,8 @@ public class TicketFrame extends javax.swing.JFrame implements ActionListener
         OkLeftButton = new javax.swing.JButton();
         RightSelectButton = new javax.swing.JButton();
         TotalCostLabel = new javax.swing.JLabel();
+        textTicketQuantity = new javax.swing.JTextField();
+        radioBerthType = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -126,15 +134,13 @@ public class TicketFrame extends javax.swing.JFrame implements ActionListener
 
         labelAlighting.setText("Alighting Station");
 
-        labelBerth.setText("Berth Type");
+        labelBerth.setText("First Class");
 
         labelQuantity.setText("Quantity");
 
         buttonBookTicket.setText("Book it!");
-        buttonBookTicket.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        buttonBookTicket.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonBookTicketActionPerformed(evt);
             }
         });
@@ -143,16 +149,14 @@ public class TicketFrame extends javax.swing.JFrame implements ActionListener
 
         ToLabel.setText("To");
 
-        FromList.setModel(new javax.swing.AbstractListModel<String>()
-        {
+        FromList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
         jScrollPane1.setViewportView(FromList);
 
-        ToList.setModel(new javax.swing.AbstractListModel<String>()
-        {
+        ToList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
@@ -162,17 +166,23 @@ public class TicketFrame extends javax.swing.JFrame implements ActionListener
         jLabel1.setText("Total Cost");
 
         OkLeftButton.setText("Select From");
-        OkLeftButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        OkLeftButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 OkLeftButtonActionPerformed(evt);
             }
         });
 
         RightSelectButton.setText("Select To");
 
-        TotalCostLabel.setText("jLabel2");
+        TotalCostLabel.setText("0");
+
+        textTicketQuantity.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textTicketQuantityActionPerformed(evt);
+            }
+        });
+
+        radioBerthType.setText("Yes");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -190,15 +200,16 @@ public class TicketFrame extends javax.swing.JFrame implements ActionListener
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(34, 34, 34)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(FromStationLabelField)
                                     .addComponent(RightSelectButton)
-                                    .addComponent(ToStationLabelField)
-                                    .addComponent(TotalCostLabel))))
-                        .addContainerGap(36, Short.MAX_VALUE))))
+                                    .addComponent(ToStationLabelField))
+                                .addContainerGap(57, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(36, Short.MAX_VALUE))))))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -207,16 +218,30 @@ public class TicketFrame extends javax.swing.JFrame implements ActionListener
                     .addGroup(layout.createSequentialGroup()
                         .addGap(82, 82, 82)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelAlighting)
-                            .addComponent(labelBerth)
-                            .addComponent(labelQuantity)
-                            .addComponent(jLabel1)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(72, 72, 72)
-                                .addComponent(buttonBookTicket))
-                            .addComponent(labelBoarding)
-                            .addComponent(OkLeftButton))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(labelAlighting)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(72, 72, 72)
+                                        .addComponent(buttonBookTicket))
+                                    .addComponent(labelBoarding)
+                                    .addComponent(OkLeftButton))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(labelQuantity)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(textTicketQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(TotalCostLabel)
+                                .addGap(38, 38, 38))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(labelBerth)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(radioBerthType)
+                                .addGap(22, 22, 22)))))
+                .addGap(46, 46, 46))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -244,9 +269,13 @@ public class TicketFrame extends javax.swing.JFrame implements ActionListener
                     .addComponent(labelAlighting)
                     .addComponent(ToStationLabelField))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(labelBerth)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(labelQuantity)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(labelBerth)
+                    .addComponent(radioBerthType))
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelQuantity)
+                    .addComponent(textTicketQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
@@ -268,16 +297,29 @@ public class TicketFrame extends javax.swing.JFrame implements ActionListener
         // TODO add your handling code here:
     }//GEN-LAST:event_OkLeftButtonActionPerformed
 
+    private void textTicketQuantityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textTicketQuantityActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textTicketQuantityActionPerformed
+
+    private int calculateTicketAmount() {
+        if (fromStationIndex == -1 || toStationIndex == -1 || textTicketQuantity.getText().equals("")) {
+            System.out.println(fromStationIndex + " " + toStationIndex + " " + ticketQuantity + " " + textTicketQuantity.getText());
+            return -1;
+        } else {
+            ticketQuantity = Integer.parseInt(textTicketQuantity.getText());
+            int difference = fromStationIndex - toStationIndex;
+            amount = ticketQuantity * ((Math.abs(difference)) * 5 + berthCost);
+            return amount;
+        }
+    }
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[])
-    {
+    public static void main(String args[]) {
 
-        java.awt.EventQueue.invokeLater(new Runnable()
-        {
-            public void run()
-            {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
                 new TicketFrame().setVisible(true);
             }
         });
@@ -302,6 +344,8 @@ public class TicketFrame extends javax.swing.JFrame implements ActionListener
     private javax.swing.JLabel labelBerth;
     private javax.swing.JLabel labelBoarding;
     private javax.swing.JLabel labelQuantity;
+    private javax.swing.JRadioButton radioBerthType;
+    private javax.swing.JTextField textTicketQuantity;
     private javax.swing.JLabel ticketsHeader;
     // End of variables declaration//GEN-END:variables
 }
