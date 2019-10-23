@@ -33,6 +33,7 @@ public class Login extends javax.swing.JFrame {
     Connection conn = null;
     Statement stmt = null;
     ResultSet rs = null;
+    String username;
 
     /**
      * Creates new form Login
@@ -146,7 +147,6 @@ public class Login extends javax.swing.JFrame {
     private void buttonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonLoginActionPerformed
         try {
             int count = 0;
-            String username;
             char[] enteredPassC = textLoginPassword.getPassword();
             String enteredPass = new String(enteredPassC);
             username = textLoginUserName.getText();
@@ -212,7 +212,7 @@ public class Login extends javax.swing.JFrame {
     }
     private void openTicketFrame() {
         setVisible(false);
-        new TicketFrame().setVisible(true);
+        new TicketFrame(username).setVisible(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
